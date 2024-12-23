@@ -51,7 +51,7 @@ impl FieldFormatter {
         }
 
         let formatted_value = self.format(&corrected_raw_value, field_type)?;
-        let mut is_valid = true;
+        let is_valid = true;
 
         let mut result = MrzField {
             value: formatted_value,

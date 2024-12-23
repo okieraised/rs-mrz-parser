@@ -1,11 +1,11 @@
-use crate::constants::constants::{alphabet_mapping, WEIGHTS};
+use crate::constants::constants::{ALPHABET_MAPPING, WEIGHTS};
 
 pub fn is_value_valid(value: &str, check_digit: &str) -> bool {
     let mut total = 0;
 
     for (idx, ch) in value.to_uppercase().chars().enumerate() {
-        let char_value = if alphabet_mapping.contains_key(&ch) {
-            *alphabet_mapping.get(&ch).unwrap()
+        let char_value = if ALPHABET_MAPPING.contains_key(&ch) {
+            *ALPHABET_MAPPING.get(&ch).unwrap()
         } else if ch.is_digit(10) {
             ch.to_digit(10).unwrap() as i32
         } else if ch == '<' {
@@ -19,18 +19,18 @@ pub fn is_value_valid(value: &str, check_digit: &str) -> bool {
     (total % 10).to_string() == check_digit
 }
 
-pub fn calculate_check_digits(value: &str) -> Result<String, String> {
+pub fn calculate_check_digits(value: &str) -> Result<String, &'static str> {
     let mut total = 0;
 
     for (idx, ch) in value.to_uppercase().chars().enumerate() {
-        let char_value = if alphabet_mapping.contains_key(&ch) {
-            *alphabet_mapping.get(&ch).unwrap()
+        let char_value = if ALPHABET_MAPPING.contains_key(&ch) {
+            *ALPHABET_MAPPING.get(&ch).unwrap()
         } else if ch.is_digit(10) {
             ch.to_digit(10).unwrap() as i32
         } else if ch == '<' {
             0
         } else {
-            return Err("Invalid MRZ character".to_string());
+            return Err("Invalid MRZ character");
         };
 
         total += char_value * WEIGHTS[idx % WEIGHTS.len()];

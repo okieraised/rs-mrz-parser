@@ -1,6 +1,6 @@
-use std::any::Any;
 use crate::utils::utils::is_value_valid;
 
+#[derive(Debug)]
 pub struct MrzField {
     pub value: String, // Equivalent to `any`, specialized for `Vec<String>` for `GetNames`.
     pub raw_value: String,
