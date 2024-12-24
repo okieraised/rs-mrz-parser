@@ -1,5 +1,5 @@
-use std::collections::HashMap;
 use crate::parser::mrz_field::MrzField;
+use std::collections::HashMap;
 
 #[derive(Debug)]
 pub struct MRZResult {

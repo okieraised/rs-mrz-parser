@@ -1,7 +1,6 @@
 use crate::parser::mrz_field::MrzField;
 use crate::utils::utils::{replace_digits, replace_letters};
 
-
 #[derive(Debug, Clone, Copy)]
 pub enum FieldType {
     Names,
@@ -30,19 +29,18 @@ impl FieldFormatter {
     }
 
     pub fn field(
-        &self,
-        field_type: FieldType,
-        from: &str,
-        start_idx: usize,
-        length: usize,
-        check_digit_follow: bool,
+        &self, field_type: FieldType, from: &str, start_idx: usize, length: usize, check_digit_follow: bool,
     ) -> Result<MrzField, &'static str> {
         let end_idx = start_idx + length;
         let raw_value = &from[start_idx..end_idx];
         let mut check_digit = String::new();
 
         if check_digit_follow {
-            check_digit = from.chars().nth(end_idx).map(|c| c.to_string()).unwrap_or_default();
+            check_digit = from
+                .chars()
+                .nth(end_idx)
+                .map(|c| c.to_string())
+                .unwrap_or_default();
         }
 
         let mut corrected_raw_value = raw_value.to_string();
@@ -122,10 +120,9 @@ impl FieldFormatter {
     // Correction logic
     pub fn correct(&self, from: &str, field_type: FieldType) -> String {
         match field_type {
-            FieldType::Birthdate
-            | FieldType::ExpiryDate
-            | FieldType::Hash
-            | FieldType::Numeric => self.replace_letters(from),
+            FieldType::Birthdate | FieldType::ExpiryDate | FieldType::Hash | FieldType::Numeric => {
+                self.replace_letters(from)
+            }
             FieldType::Names
             | FieldType::DocumentType
             | FieldType::CountryCode

@@ -1,2 +1,2 @@
 pub mod constants;
-mod mrz_field_name;
+pub mod mrz_field_name;
