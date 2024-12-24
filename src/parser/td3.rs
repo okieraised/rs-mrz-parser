@@ -8,9 +8,10 @@ use crate::parser::field_formatter::FieldType::{
     Birthdate, CountryCode, DocumentNumber, DocumentType, ExpiryDate, Hash, Names, Nationality, PersonalNumber, Sex,
 };
 use crate::parser::mrz_field::MrzField;
-use crate::parser::parser::MRZResult;
+use crate::parser::parser::{IMRZParser, MRZResult};
 use crate::utils::utils::calculate_check_digits;
 use std::collections::HashMap;
+use crate::parser::td2::TD2;
 
 #[derive(Default, Debug, Clone)]
 pub struct TD3 {}
@@ -47,13 +48,15 @@ impl TD3 {
             Ok(document_number.is_valid && birthdate.is_valid && expiry_date.is_valid)
         }
     }
+}
 
-    pub fn parse(&self, input: Vec<String>) -> Result<MRZResult, &'static str> {
+impl IMRZParser for TD3 {
+    fn parse(&self, input: &Vec<String>) -> Result<MRZResult, &'static str> {
         if input.len() != 2 {
             return Err("invalid mrz length");
         }
 
-        for line in &input {
+        for line in input {
             if line.len() != TYPE3_NUMBER_OF_CHARACTERS_PER_LINE {
                 return Err("invalid mrz type 2 line length");
             }
@@ -159,7 +162,7 @@ mod tests {
         ];
 
         let mut td3 = TD3::new();
-        let result = td3.parse(mrz_string).unwrap();
+        let result = td3.parse(&mrz_string).unwrap();
         assert_eq!(result.is_visa, false);
         assert_eq!(result.is_valid, true);
         println!("{:?}", result)
@@ -173,7 +176,7 @@ mod tests {
         ];
 
         let mut td3 = TD3::new();
-        let result = td3.parse(mrz_string).unwrap();
+        let result = td3.parse(&mrz_string).unwrap();
         assert_eq!(result.is_visa, true);
         assert_eq!(result.is_valid, true);
         println!("{:?}", result)

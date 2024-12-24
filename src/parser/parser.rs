@@ -10,5 +10,5 @@ pub struct MRZResult {
 }
 
 pub trait IMRZParser {
-    fn parse(&self, input: Vec<String>) -> Result<MRZResult, &'static str>;
+    fn parse(&self, input: &Vec<String>) -> Result<MRZResult, &'static str>;
 }

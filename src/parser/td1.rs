@@ -48,7 +48,7 @@ impl TD1 {
 }
 
 impl IMRZParser for TD1 {
-    fn parse(&self, input: Vec<String>) -> Result<MRZResult, &'static str> {
+    fn parse(&self, input: &Vec<String>) -> Result<MRZResult, &'static str> {
         if input.len() != 3 {
             return Err("invalid mrz length");
         }
@@ -127,7 +127,7 @@ mod tests {
         ];
 
         let mut td1 = TD1::new();
-        let result = td1.parse(mrz_string).unwrap();
+        let result = td1.parse(&mrz_string).unwrap();
 
         println!("{:?}", result)
     }

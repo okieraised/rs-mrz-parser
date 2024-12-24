@@ -1,11 +1,21 @@
 use std::collections::HashMap;
 use std::sync::LazyLock;
 
+pub const MRZ_TYPE1: u8 = 1;
+pub const MRZ_TYPE2: u8 = 2;
+pub const MRZ_TYPE3: u8 = 3;
+
 pub const TYPE1_NUMBER_OF_CHARACTERS_PER_LINE: usize = 30;
 
 pub const TYPE2_NUMBER_OF_CHARACTERS_PER_LINE: usize = 36;
 
 pub const TYPE3_NUMBER_OF_CHARACTERS_PER_LINE: usize = 44;
+
+pub const TYPE1_TOTAL_NUMBER_OF_CHARACTERS: usize = 3 * TYPE1_NUMBER_OF_CHARACTERS_PER_LINE;
+pub const TYPE2_TOTAL_NUMBER_OF_CHARACTERS: usize = 2 * TYPE2_NUMBER_OF_CHARACTERS_PER_LINE;
+pub const TYPE3_TOTAL_NUMBER_OF_CHARACTERS: usize = 2 * TYPE3_NUMBER_OF_CHARACTERS_PER_LINE;
+
+
 
 pub const WEIGHTS: [i32; 3] = [7, 3, 1];
 
