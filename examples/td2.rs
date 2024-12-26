@@ -8,7 +8,7 @@ fn main() {
 
     let mut parser = MRZParser::new_mrz_line_parser(mrz_string);
     let mrz_type = parser.get_mrz_type().unwrap();
-    assert_eq!(mrz_type, rs_mrz_parser::constants::mrz_utils::TYPE1_NUMBER_OF_CHARACTERS_PER_LINE);
+    assert_eq!(mrz_type, 2);
     let result = parser.parse().unwrap();
     assert_eq!(result.is_valid, true);
 }
