@@ -1,8 +1,8 @@
-use crate::constants::constants::{ISSUING_COUNTRY_CODES, TYPE1_NUMBER_OF_CHARACTERS_PER_LINE};
 use crate::constants::mrz_field_name::{
     BIRTHDATE_FIELD, COUNTRY_CODE_FIELD, DOCUMENT_NUMBER_FIELD, DOCUMENT_TYPE_FIELD, EXPIRY_DATE_FIELD,
     FINAL_CHECK_DIGIT_FIELD, NAME_FIELD, NATIONALITY_FIELD, OPTIONAL_DATA_1_FIELD, OPTIONAL_DATA_2_FIELD, SEX_FIELD,
 };
+use crate::constants::mrz_utils::{ISSUING_COUNTRY_CODES, TYPE1_NUMBER_OF_CHARACTERS_PER_LINE};
 use crate::parser::field_formatter::FieldFormatter;
 use crate::parser::field_formatter::FieldType::{
     Birthdate, CountryCode, DocumentNumber, DocumentType, ExpiryDate, Hash, Names, Nationality, OptionalData, Sex,

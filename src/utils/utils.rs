@@ -1,4 +1,4 @@
-use crate::constants::constants::{ALPHABET_MAPPING, WEIGHTS};
+use crate::constants::mrz_utils::{ALPHABET_MAPPING, WEIGHTS};
 
 pub fn is_value_valid(value: &str, check_digit: &str) -> bool {
     let mut total = 0;

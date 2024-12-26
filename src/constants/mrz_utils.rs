@@ -1,9 +1,9 @@
 use std::collections::HashMap;
 use std::sync::LazyLock;
 
-pub const MRZ_TYPE1: u8 = 1;
-pub const MRZ_TYPE2: u8 = 2;
-pub const MRZ_TYPE3: u8 = 3;
+pub const MRZ_TYPE1: usize = 1;
+pub const MRZ_TYPE2: usize = 2;
+pub const MRZ_TYPE3: usize = 3;
 
 pub const TYPE1_NUMBER_OF_CHARACTERS_PER_LINE: usize = 30;
 

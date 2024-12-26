@@ -1,4 +1,4 @@
-use crate::constants::constants::{
+use crate::constants::mrz_utils::{
     MRZ_TYPE1, MRZ_TYPE2, MRZ_TYPE3, TYPE1_NUMBER_OF_CHARACTERS_PER_LINE, TYPE1_TOTAL_NUMBER_OF_CHARACTERS,
     TYPE2_NUMBER_OF_CHARACTERS_PER_LINE, TYPE2_TOTAL_NUMBER_OF_CHARACTERS, TYPE3_NUMBER_OF_CHARACTERS_PER_LINE,
 };
@@ -10,17 +10,17 @@ use crate::utils::utils::check_same;
 
 mod utils;
 mod parser;
-mod constants;
+pub mod constants;
 
 pub struct MRZParser {
-    mrz_type: u8,
+    mrz_type: usize,
     components: Vec<String>,
 }
 
 impl MRZParser {
     // Create a new MRZParser from a single MRZ string with lines separated by a newline character
     pub fn new_mrz_string_parser(mrz_str: &str) -> Self {
-        let mrz_type: u8 = 0;
+        let mrz_type: usize = 0;
         let components: Vec<String> = if mrz_str.contains('\n') {
             mrz_str.lines().map(String::from).collect()
         } else if mrz_str.len() == TYPE1_TOTAL_NUMBER_OF_CHARACTERS {
@@ -46,7 +46,7 @@ impl MRZParser {
 
     // Create a new MRZParser from a vector of MRZ lines
     pub fn new_mrz_line_parser(mrz_lines: Vec<String>) -> Self {
-        let mrz_type: u8 = 0;
+        let mrz_type: usize = 0;
         MRZParser {
             mrz_type,
             components: mrz_lines,
@@ -54,7 +54,7 @@ impl MRZParser {
     }
 
     // Return the MRZ type
-    pub fn get_mrz_type(&mut self) -> Result<u8, &'static str> {
+    pub fn get_mrz_type(&mut self) -> Result<usize, &'static str> {
         self.validate()?;
         Ok(self.mrz_type)
     }
@@ -75,7 +75,7 @@ impl MRZParser {
 
     // Validate the input MRZ for formatting errors
     fn validate(&mut self) -> Result<(), &'static str> {
-        let mut mrz_type = 0;
+        let mut mrz_type: usize = 0;
 
         match self.components.len() {
             3 => {
