@@ -1,7 +1,6 @@
 use crate::parser::mrz_field::MrzField;
 use crate::utils::utils::{replace_digits, replace_letters};
 
-
 #[derive(Debug, Clone, Copy)]
 pub enum FieldType {
     Names,
@@ -30,19 +29,18 @@ impl FieldFormatter {
     }
 
     pub fn field(
-        &self,
-        field_type: FieldType,
-        from: &str,
-        start_idx: usize,
-        length: usize,
-        check_digit_follow: bool,
+        &self, field_type: FieldType, from: &str, start_idx: usize, length: usize, check_digit_follow: bool,
     ) -> Result<MrzField, &'static str> {
         let end_idx = start_idx + length;
         let raw_value = &from[start_idx..end_idx];
         let mut check_digit = String::new();
 
         if check_digit_follow {
-            check_digit = from.chars().nth(end_idx).map(|c| c.to_string()).unwrap_or_default();
+            check_digit = from
+                .chars()
+                .nth(end_idx)
+                .map(|c| c.to_string())
+                .unwrap_or_default();
         }
 
         let mut corrected_raw_value = raw_value.to_string();
@@ -51,7 +49,7 @@ impl FieldFormatter {
         }
 
         let formatted_value = self.format(&corrected_raw_value, field_type)?;
-        let mut is_valid = true;
+        let is_valid = true;
 
         let mut result = MrzField {
             value: formatted_value,
@@ -67,7 +65,7 @@ impl FieldFormatter {
         Ok(result)
     }
 
-    pub fn sex(&self, from: &str) -> &str {
+    fn sex(&self, from: &str) -> &str {
         match from {
             "M" => "MALE",
             "F" => "FEMALE",
@@ -76,7 +74,7 @@ impl FieldFormatter {
         }
     }
 
-    pub fn names(&self, from: &str) -> Vec<String> {
+    fn names(&self, from: &str) -> Vec<String> {
         let identifiers: Vec<&str> = from.split("<<").collect();
         let primary = identifiers[0].replace('<', " ");
         let secondary = if identifiers.len() > 1 {
@@ -87,11 +85,11 @@ impl FieldFormatter {
         vec![primary, secondary]
     }
 
-    pub fn text(&self, from: &str) -> String {
+    fn text(&self, from: &str) -> String {
         from.replace('<', " ")
     }
 
-    pub fn date(&self, from: &str) -> Result<String, &'static str> {
+    fn date(&self, from: &str) -> Result<String, &'static str> {
         if from.contains('<') {
             return Ok(from.to_string());
         }
@@ -111,21 +109,20 @@ impl FieldFormatter {
     }
 
     // Replace methods
-    pub fn replace_digits(&self, from: &str) -> String {
+    fn replace_digits(&self, from: &str) -> String {
         replace_digits(from)
     }
 
-    pub fn replace_letters(&self, from: &str) -> String {
+    fn replace_letters(&self, from: &str) -> String {
         replace_letters(from)
     }
 
     // Correction logic
     pub fn correct(&self, from: &str, field_type: FieldType) -> String {
         match field_type {
-            FieldType::Birthdate
-            | FieldType::ExpiryDate
-            | FieldType::Hash
-            | FieldType::Numeric => self.replace_letters(from),
+            FieldType::Birthdate | FieldType::ExpiryDate | FieldType::Hash | FieldType::Numeric => {
+                self.replace_letters(from)
+            }
             FieldType::Names
             | FieldType::DocumentType
             | FieldType::CountryCode

@@ -1,16 +1,3 @@
-# rs-mrz-parser
-
-## Introduction
-Automatically determine and parse MRZ string in Rust
-
-## Installation
-```rust
-cargo add rs_mrz_parser
-```
-
-## Example
-
-```rust
 use rs_mrz_parser::constants::mrz_utils::MRZ_TYPE1;
 use rs_mrz_parser::MRZParser;
 
@@ -27,7 +14,3 @@ fn main() {
     let result = parser.parse().unwrap();
     assert_eq!(result.is_valid, true);
 }
-```
-
-## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details

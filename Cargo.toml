@@ -2,6 +2,37 @@
 name = "rs-mrz-parser"
 version = "0.1.0"
 edition = "2021"
+rust-version = "1.83"
+authors = [
+    "okieraised"
+]
+license = "MIT"
+repository = "https://github.com/okieraised/rs-mrz-parser"
+
+description = "A MRZ parser written in Rust"
+
+keywords = ["mrz", "MRZ"]
+categories = ["parser-implementations"]
+
+[lib]
+name = "rs_mrz_parser"
+bench = false
+test = true
+
+[[example]]
+name = "td1"
+
+[[example]]
+name = "td2"
+
+[[example]]
+name = "td3"
 
 [dependencies]
-lazy_static = "1.5.0"
+
+[profile.dev]
+opt-level = 0
+incremental = true
+
+[profile.release]
+opt-level = 3

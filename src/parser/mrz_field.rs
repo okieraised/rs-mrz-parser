@@ -1,8 +1,8 @@
-use std::any::Any;
 use crate::utils::utils::is_value_valid;
 
+#[derive(Debug, Clone)]
 pub struct MrzField {
-    pub value: String, // Equivalent to `any`, specialized for `Vec<String>` for `GetNames`.
+    pub value: String,
     pub raw_value: String,
     pub check_digit: String,
     pub is_valid: bool,
@@ -56,4 +56,3 @@ impl MrzField {
         is_value_valid(&self.raw_value, &self.check_digit)
     }
 }
-
