@@ -1,4 +1,7 @@
-use crate::constants::constants::{TYPE1_NUMBER_OF_CHARACTERS_PER_LINE, TYPE2_NUMBER_OF_CHARACTERS_PER_LINE, TYPE3_NUMBER_OF_CHARACTERS_PER_LINE, TYPE1_TOTAL_NUMBER_OF_CHARACTERS, TYPE2_TOTAL_NUMBER_OF_CHARACTERS, MRZ_TYPE1, MRZ_TYPE2, MRZ_TYPE3};
+use crate::constants::constants::{
+    MRZ_TYPE1, MRZ_TYPE2, MRZ_TYPE3, TYPE1_NUMBER_OF_CHARACTERS_PER_LINE, TYPE1_TOTAL_NUMBER_OF_CHARACTERS,
+    TYPE2_NUMBER_OF_CHARACTERS_PER_LINE, TYPE2_TOTAL_NUMBER_OF_CHARACTERS, TYPE3_NUMBER_OF_CHARACTERS_PER_LINE,
+};
 use crate::parser::parser::{IMRZParser, MRZResult};
 use crate::parser::td1::TD1;
 use crate::parser::td2::TD2;
@@ -17,16 +20,13 @@ pub struct MRZParser {
 impl MRZParser {
     // Create a new MRZParser from a single MRZ string with lines separated by a newline character
     pub fn new_mrz_string_parser(mrz_str: &str) -> Self {
-
         let mrz_type: u8 = 0;
         let components: Vec<String> = if mrz_str.contains('\n') {
             mrz_str.lines().map(String::from).collect()
         } else if mrz_str.len() == TYPE1_TOTAL_NUMBER_OF_CHARACTERS {
             vec![
                 mrz_str[..TYPE1_NUMBER_OF_CHARACTERS_PER_LINE].to_string(),
-                mrz_str[TYPE1_NUMBER_OF_CHARACTERS_PER_LINE
-                    ..2 * TYPE1_NUMBER_OF_CHARACTERS_PER_LINE]
-                    .to_string(),
+                mrz_str[TYPE1_NUMBER_OF_CHARACTERS_PER_LINE..2 * TYPE1_NUMBER_OF_CHARACTERS_PER_LINE].to_string(),
                 mrz_str[2 * TYPE1_NUMBER_OF_CHARACTERS_PER_LINE..].to_string(),
             ]
         } else if mrz_str.len() == TYPE2_TOTAL_NUMBER_OF_CHARACTERS {
@@ -41,10 +41,7 @@ impl MRZParser {
             ]
         };
 
-        MRZParser {
-            mrz_type,
-            components,
-        }
+        MRZParser { mrz_type, components }
     }
 
     // Create a new MRZParser from a vector of MRZ lines
@@ -61,7 +58,6 @@ impl MRZParser {
         self.validate()?;
         Ok(self.mrz_type)
     }
-
 
     // Parse the MRZ information
     pub fn parse(&mut self) -> Result<MRZResult, &'static str> {
@@ -101,26 +97,20 @@ impl MRZParser {
                     character_count.push(line.len());
                 }
 
-                if check_same(&character_count)
-                    && character_count[0] ==TYPE2_NUMBER_OF_CHARACTERS_PER_LINE
-                {
+                if check_same(&character_count) && character_count[0] == TYPE2_NUMBER_OF_CHARACTERS_PER_LINE {
                     mrz_type = MRZ_TYPE2;
                 }
-                if check_same(&character_count)
-                    && character_count[0] == TYPE3_NUMBER_OF_CHARACTERS_PER_LINE
-                {
-                    mrz_type =MRZ_TYPE3;
+                if check_same(&character_count) && character_count[0] == TYPE3_NUMBER_OF_CHARACTERS_PER_LINE {
+                    mrz_type = MRZ_TYPE3;
                 }
             }
-            _ => return Err("invalid mrz line length")
+            _ => return Err("invalid mrz line length"),
         }
 
         self.mrz_type = mrz_type;
         Ok(())
     }
 }
-
-
 
 #[cfg(test)]
 mod tests {
@@ -152,4 +142,3 @@ mod tests {
         println!("{:?}", result)
     }
 }
-

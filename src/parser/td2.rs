@@ -47,7 +47,6 @@ impl TD2 {
     }
 }
 
-
 impl IMRZParser for TD2 {
     fn parse(&self, input: &Vec<String>) -> Result<MRZResult, &'static str> {
         if input.len() != 2 {
