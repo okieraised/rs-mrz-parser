@@ -11,7 +11,6 @@ use crate::parser::mrz_field::MrzField;
 use crate::parser::parser::{IMRZParser, MRZResult};
 use crate::utils::utils::calculate_check_digits;
 use std::collections::HashMap;
-use crate::parser::td2::TD2;
 
 #[derive(Default, Debug, Clone)]
 pub struct TD3 {}

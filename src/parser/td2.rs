@@ -11,7 +11,6 @@ use crate::parser::mrz_field::MrzField;
 use crate::parser::parser::{IMRZParser, MRZResult};
 use crate::utils::utils::calculate_check_digits;
 use std::collections::HashMap;
-use crate::parser::td1::TD1;
 
 #[derive(Default, Debug, Clone)]
 pub struct TD2 {}
@@ -55,7 +54,7 @@ impl IMRZParser for TD2 {
             return Err("invalid mrz length");
         }
 
-        for line in &input {
+        for line in input {
             if line.len() != TYPE2_NUMBER_OF_CHARACTERS_PER_LINE {
                 return Err("invalid mrz type 2 line length");
             }

@@ -65,7 +65,7 @@ impl FieldFormatter {
         Ok(result)
     }
 
-    pub fn sex(&self, from: &str) -> &str {
+    fn sex(&self, from: &str) -> &str {
         match from {
             "M" => "MALE",
             "F" => "FEMALE",
@@ -74,7 +74,7 @@ impl FieldFormatter {
         }
     }
 
-    pub fn names(&self, from: &str) -> Vec<String> {
+    fn names(&self, from: &str) -> Vec<String> {
         let identifiers: Vec<&str> = from.split("<<").collect();
         let primary = identifiers[0].replace('<', " ");
         let secondary = if identifiers.len() > 1 {
@@ -85,11 +85,11 @@ impl FieldFormatter {
         vec![primary, secondary]
     }
 
-    pub fn text(&self, from: &str) -> String {
+    fn text(&self, from: &str) -> String {
         from.replace('<', " ")
     }
 
-    pub fn date(&self, from: &str) -> Result<String, &'static str> {
+    fn date(&self, from: &str) -> Result<String, &'static str> {
         if from.contains('<') {
             return Ok(from.to_string());
         }
@@ -109,11 +109,11 @@ impl FieldFormatter {
     }
 
     // Replace methods
-    pub fn replace_digits(&self, from: &str) -> String {
+    fn replace_digits(&self, from: &str) -> String {
         replace_digits(from)
     }
 
-    pub fn replace_letters(&self, from: &str) -> String {
+    fn replace_letters(&self, from: &str) -> String {
         replace_letters(from)
     }
 

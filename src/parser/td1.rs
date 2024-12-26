@@ -53,7 +53,7 @@ impl IMRZParser for TD1 {
             return Err("invalid mrz length");
         }
 
-        for line in &input {
+        for line in input {
             if line.len() != TYPE1_NUMBER_OF_CHARACTERS_PER_LINE {
                 return Err("invalid mrz type 1 line length");
             }

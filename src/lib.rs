@@ -54,7 +54,6 @@ impl MRZParser {
             mrz_type,
             components: mrz_lines,
         }
-        }
     }
 
     // Return the MRZ type
@@ -128,8 +127,29 @@ mod tests {
     use super::*;
 
     #[test]
-    fn it_works() {
+    fn test_td1_vec() {
+        let mrz_string: Vec<String> = vec![
+            "I<UTOD231458907<<<<<<<<<<<<<<<".to_string(),
+            "7408122F1204159UTO<<<<<<<<<<<6".to_string(),
+            "ERIKSSON<<ANNA<MARIA<<<<<<<<<<".to_string(),
+        ];
 
+        let mut parser = MRZParser::new_mrz_line_parser(mrz_string);
+        let result = parser.parse().unwrap();
+        assert_eq!(result.is_valid, true);
+        println!("{:?}", result)
+    }
+
+    #[test]
+    fn test_td1_str() {
+        let mrz_string: &str = "\
+        I<UTOD231458907<<<<<<<<<<<<<<<\n\
+        7408122F1204159UTO<<<<<<<<<<<6\n\
+        ERIKSSON<<ANNA<MARIA<<<<<<<<<<";
+        let mut parser = MRZParser::new_mrz_string_parser(mrz_string);
+        let result = parser.parse().unwrap();
+        assert_eq!(result.is_valid, true);
+        println!("{:?}", result)
     }
 }
 
